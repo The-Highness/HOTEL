@@ -9,7 +9,9 @@ import MyOrders from "./templates/MyOrders";
 import CreateOrder from "./templates/CreateOrder";
 import AdminDashboard from "./templates/AdminDashboard";
 
-const API_BASE = (import.meta.env.VITE_API_BASE_URL || "").replace(/\/$/, "");
+const API_BASE = (
+  import.meta.env.VITE_API_BASE_URL || "https://hotel-backend-bpjr.onrender.com"
+).replace(/\/$/, "");
 const API_FALLBACK_BASE = import.meta.env.DEV ? "http://127.0.0.1:8000" : "";
 
 const initialRegister = {
