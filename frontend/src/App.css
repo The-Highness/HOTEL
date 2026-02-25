@@ -1,0 +1,154 @@
+:root {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f7fafc, #e4ecf7);
+  color: #1b2430;
+}
+
+.app {
+  min-height: 100vh;
+}
+
+.top-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 14px;
+  background: #1f2937;
+}
+
+.top-nav button {
+  width: auto;
+  padding: 8px 12px;
+  background: #374151;
+}
+
+.top-nav button:hover {
+  background: #4b5563;
+}
+
+.page-wrap {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 18px;
+}
+
+.card {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.12);
+  padding: 18px;
+  margin-bottom: 14px;
+}
+
+.auth-card {
+  max-width: 460px;
+}
+
+.hero {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.12);
+  padding: 22px;
+  margin-bottom: 14px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 12px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0 0 8px;
+}
+
+p {
+  margin: 0 0 12px;
+}
+
+button,
+input,
+select {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #ccd6e4;
+  padding: 10px 12px;
+  font-size: 15px;
+}
+
+input,
+select {
+  margin-bottom: 10px;
+}
+
+button {
+  background: #0f5ed8;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.message {
+  margin-bottom: 12px;
+  padding: 10px;
+  border-radius: 8px;
+  background: #eef4ff;
+}
+
+.row-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.secondary {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.link-btn {
+  width: auto;
+  background: transparent;
+  color: #0f5ed8;
+  padding: 0;
+  border: none;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px solid #e5e7eb;
+  text-align: left;
+  padding: 8px;
+}
+
+.order-block {
+  margin-bottom: 14px;
+}
+
+.stat {
+  font-size: 22px;
+  font-weight: 700;
+}
