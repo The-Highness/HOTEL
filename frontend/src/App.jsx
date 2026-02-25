@@ -9,8 +9,8 @@ import MyOrders from "./templates/MyOrders";
 import CreateOrder from "./templates/CreateOrder";
 import AdminDashboard from "./templates/AdminDashboard";
 
-const API_BASE = "";
-const API_FALLBACK_BASE = "http://127.0.0.1:8000";
+const API_BASE = (import.meta.env.VITE_API_BASE_URL || "").replace(/\/$/, "");
+const API_FALLBACK_BASE = import.meta.env.DEV ? "http://127.0.0.1:8000" : "";
 
 const initialRegister = {
   hotel_name: "",
@@ -86,12 +86,12 @@ function App() {
     };
 
     let response = await tryFetch(`${API_BASE}${path}`);
-    if (!response) {
+    if (!response && API_FALLBACK_BASE) {
       response = await tryFetch(`${API_FALLBACK_BASE}${path}`);
     }
 
     if (!response) {
-      throw new Error("Imeshindikana ku-connect na backend. Hakikisha Django server ina-run kwenye :8000.");
+      throw new Error("Imeshindikana ku-connect na backend. Angalia VITE_API_BASE_URL au status ya Render service.");
     }
 
     return await parseResponse(response);
@@ -417,3 +417,4 @@ function App() {
 }
 
 export default App;
+
