@@ -6,7 +6,8 @@
 2. On Render, create service from repo (or use `render.yaml`).
 3. Ensure backend service uses:
    - Root Directory: `backend`
-   - Build Command: `pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate`
+   - Build Command: `bash render_build.sh`
+   - Pre-Deploy Command: `python manage.py migrate`
    - Start Command: `gunicorn myproject.wsgi:application`
 4. Create Render PostgreSQL database and attach `DATABASE_URL`.
 5. Set backend env vars:

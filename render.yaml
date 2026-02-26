@@ -5,6 +5,7 @@ services:
     plan: free
     rootDir: backend
     buildCommand: bash render_build.sh
+    preDeployCommand: python manage.py migrate
     startCommand: gunicorn myproject.wsgi:application
     envVars:
       - key: DEBUG
