@@ -287,8 +287,21 @@ def api_admin_update_order(request, order_id):
     admin_feedback = (payload.get("admin_feedback") or "").strip()
     estimated_completion_raw = (payload.get("estimated_completion_at") or "").strip()
 
+    status_aliases = {
+        "approve": "Accepted",
+        "approved": "Accepted",
+        "accept": "Accepted",
+        "accepted": "Accepted",
+        "reject": "Rejected",
+        "rejected": "Rejected",
+        "complete": "Completed",
+        "completed": "Completed",
+        "pending": "Pending",
+    }
+    normalized_status = status_aliases.get(status.lower(), status) if status else ""
+
     valid_statuses = {choice[0] for choice in MyOrder.STATUS_CHOICES}
-    if status and status not in valid_statuses:
+    if normalized_status and normalized_status not in valid_statuses:
         return JsonResponse({"detail": "Invalid status."}, status=400)
 
     estimated_completion_at = None
@@ -303,12 +316,12 @@ def api_admin_update_order(request, order_id):
             order = MyOrder.objects.select_for_update().get(id=order_id)
             previous_status = order.status
 
-            if status:
-                order.status = status
+            if normalized_status:
+                order.status = normalized_status
             order.admin_feedback = admin_feedback
             order.estimated_completion_at = estimated_completion_at
 
-            if status == "Accepted" and previous_status != "Accepted":
+            if normalized_status == "Accepted" and previous_status != "Accepted":
                 order_items = list(order.orderitem_set.all())
                 product_ids = [item.product_id for item in order_items if item.product_id]
                 service_ids = [item.service_id for item in order_items if item.service_id]
@@ -346,6 +359,14 @@ def api_admin_update_order(request, order_id):
                         service = services[item.service_id]
                         service.quantity -= item.quantity
                         service.save(update_fields=["quantity"])
+
+            if not order.admin_feedback:
+                if order.status == "Accepted":
+                    order.admin_feedback = "Order approved and now being prepared."
+                elif order.status == "Rejected":
+                    order.admin_feedback = "Order rejected. Please contact admin for details."
+                elif order.status == "Completed":
+                    order.admin_feedback = "Order completed and ready/served."
 
             order.save(update_fields=["status", "admin_feedback", "estimated_completion_at"])
     except MyOrder.DoesNotExist:

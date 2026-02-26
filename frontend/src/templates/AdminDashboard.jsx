@@ -51,6 +51,19 @@ function AdminDashboard({
     onUpdateOrder(order.id, draft);
   };
 
+  const applyQuickOrderAction = (order, status) => {
+    const feedbackByStatus = {
+      Accepted: "Order approved and now being prepared.",
+      Rejected: "Order rejected. Please contact admin for details.",
+      Completed: "Order completed and ready/served."
+    };
+    onUpdateOrder(order.id, {
+      ...getOrderDraft(order),
+      status,
+      admin_feedback: feedbackByStatus[status] || getOrderDraft(order).admin_feedback
+    });
+  };
+
   const submitCreateProduct = (event) => {
     event.preventDefault();
     onCreateItem("product", newProduct);
@@ -178,6 +191,27 @@ function AdminDashboard({
                     <td>{order.total_cost}</td>
                     <td>
                       <button type="button" onClick={() => submitOrderUpdate(order)}>Save</button>
+                      <button
+                        type="button"
+                        className="secondary"
+                        onClick={() => applyQuickOrderAction(order, "Accepted")}
+                      >
+                        Approve
+                      </button>
+                      <button
+                        type="button"
+                        className="secondary"
+                        onClick={() => applyQuickOrderAction(order, "Rejected")}
+                      >
+                        Reject
+                      </button>
+                      <button
+                        type="button"
+                        className="secondary"
+                        onClick={() => applyQuickOrderAction(order, "Completed")}
+                      >
+                        Complete
+                      </button>
                       <button
                         type="button"
                         className="secondary"
