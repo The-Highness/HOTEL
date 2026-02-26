@@ -7,6 +7,7 @@ services:
     buildCommand: bash render_build.sh
     preDeployCommand: bash render_predeploy.sh
     startCommand: gunicorn myproject.wsgi:application
+    healthCheckPath: /api/health/
     envVars:
       - key: DEBUG
         value: "False"

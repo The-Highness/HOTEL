@@ -15,6 +15,11 @@ from .serializers import MyOrderSerializer, ProductSerializer, ServiceSerializer
 User = get_user_model()
 
 
+@require_GET
+def api_health(request):
+    return JsonResponse({"status": "ok"})
+
+
 def _parse_body(request):
     try:
         return json.loads(request.body.decode("utf-8"))
