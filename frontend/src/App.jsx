@@ -10,9 +10,8 @@ import CreateOrder from "./templates/CreateOrder";
 import AdminDashboard from "./templates/AdminDashboard";
 
 const API_BASE = (
-  import.meta.env.VITE_API_BASE_URL || "https://hotel-backend-bpjr.onrender.com"
+  import.meta.env.VITE_API_BASE_URL || (import.meta.env.DEV ? "http://127.0.0.1:8000" : "")
 ).replace(/\/$/, "");
-const API_FALLBACK_BASE = import.meta.env.DEV ? "http://127.0.0.1:8000" : "";
 
 const initialRegister = {
   hotel_name: "",
@@ -79,20 +78,18 @@ function App() {
       return data;
     };
 
-    const tryFetch = async (url) => {
-      try {
-        return await fetch(url, options);
-      } catch {
-        return null;
-      }
-    };
-
-    let response = await tryFetch(`${API_BASE}${path}`);
-    if (!response && API_FALLBACK_BASE) {
-      response = await tryFetch(`${API_FALLBACK_BASE}${path}`);
+    if (!API_BASE) {
+      throw new Error("VITE_API_BASE_URL haijawekwa kwenye frontend environment variables.");
     }
 
-    if (!response) {
+    let response = null;
+    try {
+      response = await fetch(`${API_BASE}${path}`, options);
+    } catch {
+      response = null;
+    }
+
+    if (response === null) {
       throw new Error("Imeshindikana ku-connect na backend. Angalia VITE_API_BASE_URL au status ya Render service.");
     }
 

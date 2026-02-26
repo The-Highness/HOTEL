@@ -8,23 +8,20 @@ import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
+def split_env_list(name, default=""):
+    return [item.strip() for item in os.getenv(name, default).split(",") if item.strip()]
+
 SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-change-me-in-production")
 DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 
-ALLOWED_HOSTS = [
-    host.strip()
-    for host in os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
-    if host.strip()
-]
-
-FRONTEND_ORIGINS = [
-    origin.strip()
-    for origin in os.getenv(
-        "FRONTEND_ORIGINS",
-        "http://localhost:5173,http://127.0.0.1:5173",
-    ).split(",")
-    if origin.strip()
-]
+ALLOWED_HOSTS = split_env_list("ALLOWED_HOSTS", "127.0.0.1,localhost")
+FRONTEND_ORIGINS = split_env_list(
+    "FRONTEND_ORIGINS",
+    "http://localhost:5173,http://127.0.0.1:5173",
+)
+FRONTEND_ORIGIN_REGEXES = split_env_list("FRONTEND_ORIGIN_REGEXES")
+CSRF_EXTRA_TRUSTED_ORIGINS = split_env_list("CSRF_TRUSTED_ORIGINS")
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -92,8 +89,9 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CORS_ALLOWED_ORIGINS = FRONTEND_ORIGINS
+CORS_ALLOWED_ORIGIN_REGEXES = FRONTEND_ORIGIN_REGEXES
 CORS_ALLOW_CREDENTIALS = True
-CSRF_TRUSTED_ORIGINS = FRONTEND_ORIGINS
+CSRF_TRUSTED_ORIGINS = FRONTEND_ORIGINS + CSRF_EXTRA_TRUSTED_ORIGINS
 
 SESSION_COOKIE_SECURE = not DEBUG
 CSRF_COOKIE_SECURE = not DEBUG
