@@ -21,10 +21,4 @@ services:
       - key: CSRF_TRUSTED_ORIGINS
         value: https://*.vercel.app
       - key: DATABASE_URL
-        fromDatabase:
-          name: hotel-db
-          property: connectionString
-
-databases:
-  - name: hotel-db
-    plan: free
+        value: postgresql://neondb_owner:npg_6PFqwaSpJK8R@ep-divine-lab-aiv27r55-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
