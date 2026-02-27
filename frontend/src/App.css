@@ -181,9 +181,146 @@ body::before {
 }
 
 .page-wrap {
+  position: relative;
+  overflow: hidden;
   max-width: 1120px;
   margin: 0 auto;
   padding: 22px 18px 40px;
+}
+
+.page-wrap::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 24px;
+  opacity: 0.55;
+}
+
+.page-wrap[data-page="home"]::before {
+  background:
+    radial-gradient(circle at 12% 12%, rgba(57, 168, 255, 0.16) 0%, transparent 35%),
+    radial-gradient(circle at 88% 18%, rgba(11, 99, 206, 0.14) 0%, transparent 30%);
+}
+
+.page-wrap[data-page="products"]::before {
+  background:
+    linear-gradient(115deg, rgba(56, 189, 248, 0.12) 0%, rgba(56, 189, 248, 0) 42%),
+    repeating-linear-gradient(
+      90deg,
+      rgba(11, 99, 206, 0.09) 0,
+      rgba(11, 99, 206, 0.09) 1px,
+      transparent 1px,
+      transparent 14px
+    );
+}
+
+.page-wrap[data-page="services"]::before {
+  background:
+    linear-gradient(145deg, rgba(14, 116, 144, 0.12) 0%, rgba(14, 116, 144, 0) 48%),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(11, 99, 206, 0.08) 0,
+      rgba(11, 99, 206, 0.08) 9px,
+      transparent 9px,
+      transparent 18px
+    );
+}
+
+.page-wrap[data-page="my_orders"]::before {
+  background:
+    radial-gradient(circle at 8% 14%, rgba(245, 158, 11, 0.16) 0%, transparent 28%),
+    radial-gradient(circle at 92% 78%, rgba(11, 99, 206, 0.14) 0%, transparent 32%);
+}
+
+.page-wrap[data-page="create_order"]::before {
+  background:
+    linear-gradient(120deg, rgba(11, 99, 206, 0.12) 0%, rgba(11, 99, 206, 0) 42%),
+    radial-gradient(circle at 92% 12%, rgba(34, 197, 94, 0.15) 0%, transparent 30%);
+}
+
+.page-wrap[data-page="admin_dashboard"]::before {
+  background:
+    linear-gradient(160deg, rgba(15, 47, 82, 0.16) 0%, rgba(15, 47, 82, 0) 55%),
+    repeating-linear-gradient(
+      0deg,
+      rgba(15, 47, 82, 0.07) 0,
+      rgba(15, 47, 82, 0.07) 2px,
+      transparent 2px,
+      transparent 16px
+    );
+}
+
+.page-wrap[data-page="login"]::before,
+.page-wrap[data-page="register"]::before {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(11, 99, 206, 0.16) 0%, transparent 40%),
+    linear-gradient(180deg, rgba(57, 168, 255, 0.08) 0%, rgba(57, 168, 255, 0) 40%);
+}
+
+.page-wrap[data-page="products"] .card,
+.page-wrap[data-page="services"] .card {
+  border-top: 3px solid rgba(11, 99, 206, 0.32);
+}
+
+.catalog-page {
+  overflow: hidden;
+}
+
+.catalog-page::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background-position: right 20px top 18px;
+  background-repeat: no-repeat;
+  background-size: 120px;
+  opacity: 0.14;
+}
+
+.products-page::after {
+  background-image: url("./assets/hotel-logo.svg");
+}
+
+.services-page::after {
+  background-image: url("./assets/hotel-logo.svg");
+  transform: scaleX(-1);
+}
+
+.catalog-page > * {
+  position: relative;
+  z-index: 1;
+}
+
+.catalog-subtitle {
+  color: var(--text-soft);
+  margin-bottom: 12px;
+}
+
+.item-emoji {
+  margin-right: 8px;
+  font-size: 1rem;
+  filter: drop-shadow(0 1px 1px rgba(11, 99, 206, 0.2));
+}
+
+.page-wrap[data-page="my_orders"] .order-block {
+  border-left: 4px solid rgba(245, 158, 11, 0.55);
+}
+
+.page-wrap[data-page="create_order"] .card {
+  border-top: 3px solid rgba(34, 197, 94, 0.4);
+}
+
+.page-wrap[data-page="admin_dashboard"] .card {
+  border-color: rgba(15, 47, 82, 0.22);
+}
+
+.page-wrap[data-page="login"] .auth-card,
+.page-wrap[data-page="register"] .auth-card {
+  border-top: 4px solid rgba(11, 99, 206, 0.5);
 }
 
 .page-header {

@@ -1,7 +1,8 @@
 function Products({ products }) {
   return (
-    <section className="card">
-      <h2>Products</h2>
+    <section className="card catalog-page products-page">
+      <h2>Products 🛍️</h2>
+      <p className="catalog-subtitle">Stock ya bidhaa za hotel kwa muonekano wa kisasa.</p>
       <table>
         <thead>
           <tr><th>Name</th><th>Cost</th><th>Quantity</th></tr>
@@ -9,7 +10,7 @@ function Products({ products }) {
         <tbody>
           {products.map((product) => (
             <tr key={product.id}>
-              <td>{product.name}</td>
+              <td><span className="item-emoji" aria-hidden="true">🧴</span>{product.name}</td>
               <td>{product.cost ?? product.price}</td>
               <td>{product.quantity}</td>
             </tr>
