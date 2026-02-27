@@ -16,8 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from . import views as project_views
 
 urlpatterns = [
+    path('ping', project_views.ping, name='ping'),
     path('admin/', admin.site.urls),
     path('', include('myhotel.urls')),
 ]
