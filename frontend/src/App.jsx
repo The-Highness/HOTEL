@@ -34,8 +34,6 @@ const initialOrder = {
   service_quantity: "1"
 };
 
-const REQUEST_TIMEOUT_MS = 15000;
-
 function App() {
   const [page, setPage] = useState("home");
   const [registerForm, setRegisterForm] = useState(initialRegister);
@@ -85,18 +83,11 @@ function App() {
       throw new Error("VITE_API_BASE_URL haijawekwa kwenye frontend environment variables.");
     }
 
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
     let response = null;
     try {
-      response = await fetch(`${API_BASE}${path}`, { ...options, signal: controller.signal });
-    } catch (error) {
-      if (error?.name === "AbortError") {
-        throw new Error("Ombi limechukua muda mrefu sana. Jaribu tena.");
-      }
+      response = await fetch(`${API_BASE}${path}`, options);
+    } catch {
       response = null;
-    } finally {
-      clearTimeout(timeoutId);
     }
 
     if (response === null) {

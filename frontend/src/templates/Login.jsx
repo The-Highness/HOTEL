@@ -2,7 +2,7 @@ function Login({ form, onChange, onSubmit, onSwitch, loading = false }) {
   return (
     <section className="card auth-card">
       <h2>Welcome Back</h2>
-      <p>Login with Hotel ID. Admin can login with username.</p>
+      <p>Sign in with your Hotel ID. Admin can sign in with username.</p>
       <form onSubmit={onSubmit}>
         <label htmlFor="login-identifier">Hotel ID or Username</label>
         <input
@@ -23,10 +23,10 @@ function Login({ form, onChange, onSubmit, onSwitch, loading = false }) {
           required
         />
 
-        <button type="submit" disabled={loading}>{loading ? "Inaingia..." : "Login"}</button>
+        <button type="submit" disabled={loading}>{loading ? "Signing in..." : "Sign In"}</button>
       </form>
       <p>
-        Do not have an account? <button className="link-btn" onClick={onSwitch} disabled={loading}>Register here</button>
+        Don&apos;t have an account? <button className="link-btn" onClick={onSwitch} disabled={loading}>Register here</button>
       </p>
     </section>
   );
