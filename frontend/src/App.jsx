@@ -130,6 +130,18 @@ function App() {
   };
 
   useEffect(() => {
+    // Warm up Render backend early so first login is faster after idle time.
+    const warmUpBackend = async () => {
+      if (!API_BASE) return;
+      try {
+        await fetch(`${API_BASE}/api/health/`, { credentials: "include" });
+      } catch {
+        // Ignore warm-up failures; normal requests will surface real errors.
+      }
+    };
+
+    warmUpBackend();
+
     const bootstrap = async () => {
       try {
         const data = await apiRequest("/api/me/");
@@ -163,7 +175,7 @@ function App() {
 
   const handleLogin = async (event) => {
     event.preventDefault();
-    setMessage("");
+    setMessage("Please wait a moment.");
     setAuthLoading(true);
     try {
       const data = await apiRequest("/api/login/", "POST", loginForm);
