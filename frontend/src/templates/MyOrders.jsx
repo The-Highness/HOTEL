@@ -3,14 +3,25 @@ function MyOrders({ orders }) {
 
   return (
     <section className="card">
-      <h2>My Orders</h2>
-      <p><strong>Total Cost (All Orders):</strong> {totalForUser}</p>
+      <div className="orders-header">
+        <h2>My Orders</h2>
+        <p className="orders-total"><strong>Total:</strong> {totalForUser}</p>
+      </div>
       {orders.length === 0 ? (
         <p>No orders yet.</p>
       ) : (
         orders.map((order) => (
           <div key={order.id} className="order-block">
-            <h4>Order #{order.id} | {order.status} | {order.phone}</h4>
+            <div className="order-top">
+              <h4>Order #{order.id}</h4>
+              <span className={`status-pill status-${String(order.status || "pending").toLowerCase()}`}>
+                {order.status}
+              </span>
+            </div>
+            <div className="order-meta">
+              <span><strong>Phone:</strong> {order.phone || "-"}</span>
+              <span><strong>Items:</strong> {order.items.length}</span>
+            </div>
             <p><strong>Admin Feedback:</strong> {order.admin_feedback || "No feedback yet."}</p>
             <p>
               <strong>Estimated Completion:</strong>{" "}

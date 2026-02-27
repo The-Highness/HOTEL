@@ -132,15 +132,11 @@ function AdminDashboard({
 
       <section className="card">
         <h3>Order Control</h3>
-        <table>
+        <table className="admin-order-table">
           <thead>
             <tr>
               <th>#Order</th>
-              <th>User</th>
-              <th>Hotel Name</th>
-              <th>Hotel ID</th>
-              <th>Location</th>
-              <th>Contact</th>
+              <th>Customer</th>
               <th>Status</th>
               <th>Completion Time</th>
               <th>Feedback</th>
@@ -150,18 +146,21 @@ function AdminDashboard({
           </thead>
           <tbody>
             {orders.length === 0 ? (
-              <tr><td colSpan="11">No orders found.</td></tr>
+              <tr><td colSpan="7">No orders found.</td></tr>
             ) : (
               orders.map((order) => {
                 const draft = getOrderDraft(order);
                 return (
                   <tr key={order.id}>
                     <td>#{order.id}</td>
-                    <td>{order.username}</td>
-                    <td>{order.hotel_name || "-"}</td>
-                    <td>{order.hotel_id || "-"}</td>
-                    <td>{order.contact_location || "-"}</td>
-                    <td>{order.phone || "-"}</td>
+                    <td>
+                      <div className="customer-compact">
+                        <strong>{order.hotel_name || order.username || "-"}</strong>
+                        <span>ID: {order.hotel_id || "-"}</span>
+                        <span>Location: {order.contact_location || "-"}</span>
+                        <span>Phone: {order.phone || "-"}</span>
+                      </div>
+                    </td>
                     <td>
                       <select
                         value={draft.status}
@@ -189,7 +188,7 @@ function AdminDashboard({
                       />
                     </td>
                     <td>{order.total_cost}</td>
-                    <td>
+                    <td className="table-actions">
                       <button type="button" onClick={() => submitOrderUpdate(order)}>Save</button>
                       <button
                         type="button"
